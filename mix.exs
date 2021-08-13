@@ -33,7 +33,10 @@ defmodule Exblog.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, github: "phoenixframework/phoenix", override: true},
+      {:phoenix,
+       github: "phoenixframework/phoenix",
+       override: true,
+       ref: "0da9b5c1865946eaeb3a66670955e95b1abce8bf"},
       {:phoenix_ecto, "~> 4.1"},
       {:ecto_sql, "~> 3.5"},
       {:postgrex, ">= 0.0.0"},

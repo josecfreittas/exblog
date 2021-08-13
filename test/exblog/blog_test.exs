@@ -15,7 +15,7 @@ defmodule Exblog.BlogTest do
     }
 
     test "list_posts/0 returns all posts" do
-      post = post_fixture()
+      post_fixture()
       assert length(Blog.list_posts(nil)) >= 1
     end
 
