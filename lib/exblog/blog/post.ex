@@ -1,11 +1,12 @@
 defmodule Exblog.Blog.Post do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Exblog.Users.User
 
   schema "posts" do
     field :content, :string
     field :title, :string
-    field :user_id, :id
+    belongs_to :user, User
 
     timestamps()
   end

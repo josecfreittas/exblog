@@ -119,7 +119,7 @@ defmodule ExblogWeb.PostControllerTest do
                "id" => ^id,
                "content" => "some content",
                "title" => "some title",
-               "user_id" => ^user_id
+               "user" => %{"id" => ^user_id}
              } = json_response(conn, 200)["data"]
     end
 
