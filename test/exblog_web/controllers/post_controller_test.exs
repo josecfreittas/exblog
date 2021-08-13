@@ -36,12 +36,55 @@ defmodule ExblogWeb.PostControllerTest do
     end
   end
 
-  describe "get post" do
-    setup [:create_post]
+  describe "search posts" do
+    @tag signed_in: "myloggeduser"
+    test "search posts by title", %{conn: conn} do
+      post_fixture(%{title: "my title"})
+      conn = get(conn, Routes.post_path(conn, :index, q: "my title"))
+      assert length(json_response(conn, 200)["data"]) == 1
+    end
 
     @tag signed_in: "myloggeduser"
+    test "search posts by content", %{conn: conn} do
+      post_fixture(%{content: "my content"})
+      conn = get(conn, Routes.post_path(conn, :index, q: "my content"))
+      assert length(json_response(conn, 200)["data"]) == 1
+    end
+
+    @tag signed_in: "myloggeduser"
+    test "search posts with no match", %{conn: conn} do
+      post_fixture()
+      conn = get(conn, Routes.post_path(conn, :index, q: "my unmatchable search"))
+      assert length(json_response(conn, 200)["data"]) == 0
+    end
+
+    @tag signed_in: "myloggeduser"
+    test "search posts with an empty query", %{conn: conn} do
+      post_fixture()
+      conn = get(conn, Routes.post_path(conn, :index, q: ""))
+      assert length(json_response(conn, 200)["data"]) == 1
+    end
+
+    test "try to search posts without an auth token", %{conn: conn} do
+      post_fixture()
+      conn = get(conn, Routes.post_path(conn, :index, q: "my"))
+      assert json_response(conn, 401)
+    end
+
+    @tag :invalid_auth_token
+    test "try search posts with an invalid auth token", %{conn: conn} do
+      post_fixture()
+      conn = get(conn, Routes.post_path(conn, :index, q: "my"))
+      assert json_response(conn, 401)
+    end
+  end
+
+  describe "get post" do
+    @tag signed_in: "myloggeduser"
     test "get a post by id using a logged user", %{conn: conn} do
-      conn = get(conn, Routes.post_path(conn, :show, 1))
+      post = post_fixture()
+
+      conn = get(conn, Routes.post_path(conn, :show, post.id))
       assert json_response(conn, 200)["data"] != %{}
     end
 
@@ -187,10 +230,5 @@ defmodule ExblogWeb.PostControllerTest do
       conn = delete(conn, Routes.post_path(conn, :delete, post.id))
       assert response(conn, 401)
     end
-  end
-
-  defp create_post(_) do
-    post = post_fixture()
-    %{post: post}
   end
 end

@@ -41,8 +41,8 @@ defmodule ExblogWeb.UserControllerTest do
 
   describe "get user" do
     @tag signed_in: "myloggeduser"
-    test "get a user by id using a logged user", %{conn: conn} do
-      conn = get(conn, Routes.user_path(conn, :show, 1))
+    test "get a user by id using a logged user", %{conn: conn, current_user: user} do
+      conn = get(conn, Routes.user_path(conn, :show, user.id))
       assert json_response(conn, 200)["data"] != %{}
     end
 

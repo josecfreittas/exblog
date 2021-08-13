@@ -10,8 +10,9 @@ defmodule ExblogWeb.PostController do
   @not_found_error {:error, 404, "Not found."}
   @unauthorized_error {:error, 401, "Unauthorized."}
 
-  def index(conn, _params) do
-    posts = Blog.list_posts()
+  def index(conn, params) do
+    query_search = params["q"]
+    posts = Blog.list_posts(query_search)
     render(conn, "index.json", posts: posts)
   end
 

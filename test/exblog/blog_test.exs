@@ -16,7 +16,7 @@ defmodule Exblog.BlogTest do
 
     test "list_posts/0 returns all posts" do
       post = post_fixture()
-      assert Blog.list_posts() == [post]
+      assert Blog.list_posts(nil) == [post]
     end
 
     test "get_post/1 returns the post with given id" do
