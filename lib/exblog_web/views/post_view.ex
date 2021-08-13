@@ -1,7 +1,6 @@
 defmodule ExblogWeb.PostView do
   use ExblogWeb, :view
 
-  alias Exblog.Users.User
   alias ExblogWeb.PostView
   alias ExblogWeb.UserView
 
