@@ -3,8 +3,6 @@ defmodule ExblogWeb.UserControllerTest do
 
   import Exblog.UsersFixtures
 
-  # alias Exblog.Users.User
-
   @create_attrs %{
     "display_name" => "Brett Wiltshire",
     "email" => "brett@email.com",
