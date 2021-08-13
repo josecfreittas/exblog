@@ -10,6 +10,8 @@ import Config
 config :exblog,
   ecto_repos: [Exblog.Repo]
 
+config :joken, default_signer: "secret"
+
 # Configures the endpoint
 config :exblog, ExblogWeb.Endpoint,
   url: [host: "localhost"],

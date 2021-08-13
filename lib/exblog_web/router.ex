@@ -1,12 +1,22 @@
 defmodule ExblogWeb.Router do
   use ExblogWeb, :router
+  import ExblogWeb.Plugs.Guards
 
   pipeline :api do
     plug :accepts, ["json"]
   end
 
-  scope "/api", ExblogWeb do
+  scope "/", ExblogWeb do
     pipe_through :api
+
+    post "/users", UserController, :create
+    post "/users/login", UserController, :login
+
+    pipe_through [:auth]
+
+    get "/users", UserController, :index
+    get "/users/:id", UserController, :show
+    delete "/users/:id", UserController, :delete
   end
 
   # Enables the Swoosh mailbox preview in development.

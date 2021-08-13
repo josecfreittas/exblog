@@ -16,6 +16,7 @@ defmodule ExblogWeb.ConnCase do
   """
 
   use ExUnit.CaseTemplate
+  import Exblog.UsersFixtures
 
   using do
     quote do
@@ -31,9 +32,31 @@ defmodule ExblogWeb.ConnCase do
     end
   end
 
+  defp create_user(name) do
+    user_fixture(%{"email" => "#{name}@example.com", "display_name" => name})
+  end
+
   setup tags do
     pid = Ecto.Adapters.SQL.Sandbox.start_owner!(Exblog.Repo, shared: not tags[:async])
     on_exit(fn -> Ecto.Adapters.SQL.Sandbox.stop_owner(pid) end)
-    {:ok, conn: Phoenix.ConnTest.build_conn()}
+    conn = Phoenix.ConnTest.build_conn()
+
+    cond do
+      Map.has_key?(tags, :signed_in) ->
+        alias ExblogWeb.Auth
+
+        user = create_user(tags[:signed_in])
+        {:ok, access, _clains} = Auth.generate_access(user.email)
+
+        conn = Plug.Conn.put_req_header(conn, "authorization", "Bearer #{access}")
+        {:ok, conn: conn, current_user: user}
+
+      Map.has_key?(tags, :invalid_auth_token) ->
+        conn = Plug.Conn.put_req_header(conn, "authorization", "Bearer invalid.token")
+        {:ok, conn: conn, current_user: nil}
+
+      true ->
+        {:ok, conn: conn, current_user: nil}
+    end
   end
 end
