@@ -1,9 +1,13 @@
 import Config
 # Configure your database
 config :exblog, Exblog.Repo,
-  database: Path.expand("../exblog_dev.db", Path.dirname(__ENV__.file)),
-  pool_size: 5,
-  show_sensitive_data_on_connection_error: true
+  username: "exblog",
+  password: "fuKyZ2T3txLLYEpexQkg",
+  database: "exblog_dev",
+  hostname: "localhost",
+  port: 15432,
+  show_sensitive_data_on_connection_error: true,
+  pool_size: 10
 
 # For development, we disable any cache and enable
 # debugging and code reloading.

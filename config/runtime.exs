@@ -7,15 +7,15 @@ import Config
 # any compile-time configuration in here, as it won't be applied.
 # The block below contains prod specific runtime configuration.
 if config_env() == :prod do
-  database_path =
-    System.get_env("DATABASE_PATH") ||
+  database_url =
+    System.get_env("DATABASE_URL") ||
       raise """
-      environment variable DATABASE_PATH is missing.
-      For example: /etc/exblog/exblog.db
+      environment variable DATABASE_URL is missing.
+      For example: ecto://USER:PASS@HOST/DATABASE
       """
 
   config :exblog, Exblog.Repo,
-    database: database_path,
+    database: database_url,
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "5")
 
   secret_key_base =

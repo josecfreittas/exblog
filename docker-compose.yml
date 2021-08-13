@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  database_dev:
+    image: postgres:12-alpine
+    volumes:
+      - database_dev:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=exblog_dev
+      - POSTGRES_USER=exblog
+      - POSTGRES_PASSWORD=fuKyZ2T3txLLYEpexQkg
+    ports:
+      - "15432:5432"
+
+  database_test:
+    image: postgres:12-alpine
+    environment:
+      - POSTGRES_DB=exblog_test
+      - POSTGRES_USER=exblog
+      - POSTGRES_PASSWORD=9UnY8swnJkAoVrZKBB2U
+    ports:
+      - "25432:5432"
+
+volumes:
+  database_dev:
