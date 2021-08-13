@@ -39,6 +39,7 @@ O projeto vem com uma suíte de testes unitários e de integração. Para execut
 
 O projeto acompanha um arquivo chamado `requests.http`. Esse arquivo contem a descrição de todas as endpoints que o projeto comporta, desde o fluxo de criação de contas e login, até transações e estornos. É possível fazer requisições HTTP para as endpoints descritas utilizando à extensão [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) para o editor [VSCode](https://code.visualstudio.com).
 
+Se você preferir utilizar o [Postman](https://www.postman.com) ou o [Insomnia](https://insomnia.rest), você pode utilizar o arquivo `postman_collection.json` que também é disponibilizado no projeto.
 
 O token recebido pela endpoint `/users/login` deverá ser ser enviado via header para toda requisição que necessite de autenticação:  
 > Authorization: Bearer `token`
