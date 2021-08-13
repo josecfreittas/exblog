@@ -15,7 +15,9 @@ defmodule ExblogWeb.PostView do
       id: post.id,
       title: post.title,
       content: post.content,
-      user_id: post.user_id
+      user_id: post.user_id,
+      created_at: post.inserted_at,
+      updated_at: post.updated_at,
     }
   end
 end
